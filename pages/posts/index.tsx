@@ -1,43 +1,24 @@
-import AllPosts from '../../components/posts/all-posts';
+import { FC } from 'react';
+import { GetStaticProps } from 'next';
+
 import { Post } from '../../models/post';
+import AllPosts from '../../components/posts/all-posts';
+import { getAllPosts } from '../../lib/posts-util';
 
-const DUMMY_POSTS: Post[] = [
-  {
-    slug: 'getting-started-with-nextjs',
-    title: 'Getting Started With NextJS',
-    image: 'getting-started-nextjs.png',
-    excerpt:
-      'NextJS is the React framework for production - it makes building fillstack React apps and sites a breeze and ships with built-in SSR.',
-    date: '2022-02-10',
-  },
-  {
-    slug: 'getting-started-with-nextjs2',
-    title: 'Getting Started With NextJS',
-    image: 'getting-started-nextjs.png',
-    excerpt:
-      'NextJS is the React framework for production - it makes building fillstack React apps and sites a breeze and ships with built-in SSR.',
-    date: '2022-02-10',
-  },
-  {
-    slug: 'getting-started-with-nextjs3',
-    title: 'Getting Started With NextJS',
-    image: 'getting-started-nextjs.png',
-    excerpt:
-      'NextJS is the React framework for production - it makes building fillstack React apps and sites a breeze and ships with built-in SSR.',
-    date: '2022-02-10',
-  },
-  {
-    slug: 'getting-started-with-nextjs4',
-    title: 'Getting Started With NextJS',
-    image: 'getting-started-nextjs.png',
-    excerpt:
-      'NextJS is the React framework for production - it makes building fillstack React apps and sites a breeze and ships with built-in SSR.',
-    date: '2022-02-10',
-  },
-];
+interface AllPostsPageProps {
+  posts: Post[];
+}
 
-const AllPostsPage = () => {
-  return <AllPosts posts={DUMMY_POSTS} />;
+const AllPostsPage: FC<AllPostsPageProps> = ({ posts }) => {
+  return <AllPosts posts={posts} />;
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const allPosts = getAllPosts();
+
+  return {
+    props: { posts: allPosts },
+  };
 };
 
 export default AllPostsPage;
