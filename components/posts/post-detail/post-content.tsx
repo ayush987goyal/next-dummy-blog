@@ -1,6 +1,8 @@
 import { FC } from 'react';
-import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 import { Post } from '../../../models/post';
 import PostHeader from './post-header';
@@ -24,6 +26,7 @@ const PostContent: FC<PostContentProps> = ({ post }) => {
     //     />
     //   );
     // },
+
     paragraph(paragraph) {
       const { node } = paragraph;
       if (node.children[0].type === 'image') {
@@ -42,6 +45,14 @@ const PostContent: FC<PostContentProps> = ({ post }) => {
       }
 
       return <p>{paragraph.children}</p>;
+    },
+
+    code({ language, value }) {
+      return (
+        <SyntaxHighlighter style={atomDark} language={language}>
+          {value}
+        </SyntaxHighlighter>
+      );
     },
   };
 
